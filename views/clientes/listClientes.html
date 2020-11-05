@@ -1,0 +1,71 @@
+{{extend plantilla()}}
+<div class="web2py_grid">
+	{{if len(clientes)>0:}}
+		<div id="listadoClientes" class="table-responsive">
+			<table id="idListadoClientesTable" class="display" style="width:100%">
+		        <thead>
+		            <tr>
+		                <th>Cliente</th>
+		                <th>Nit</th>
+		                <th>Ciudad</th>
+		                <th>Responsable</th>
+		                <th>Celular</th>
+		                <th>Email</th>
+		                <th>Estado</th>
+		                <th>Proyectos</th>
+		                <th>Usuarios</th>
+		                <th>Notificaciones</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		        	{{ for ctz in clientes: }}
+			        	<tr id="idTrCliente_{{=ctz.id}}">
+			        		<td>{{=ctz.clientes_nombre}}</td>
+			        		<td>{{=ctz.clientes_nit}}</td>
+			        		<td>{{=db.ciudades[ctz.clientes_ciudad].ciudades_nombre}}</td>
+			        		<td>{{=ctz.clientes_responsable}}</td>
+			        		<td>{{=ctz.clientes_celular}}</td>
+			        		<td>{{=ctz.clientes_email}}</td>
+			        		<td id="idTdCliente_{{=ctz.id}}">
+			        			{{if ( (ctz.clientes_estado == 'True') or (ctz.clientes_estado == True) ):}}
+			        				<span class="badge badge-success" id="spanEstado_{{=ctz.id}}" style="cursor:pointer;" onclick="ctz.cambioEstado('{{=ctz.id}}', '{{=ctz.clientes_nombre}}',0);">Activo</span>
+		        				{{else:}}
+		        					<span class="badge badge-danger" id="spanEstado_{{=ctz.id}}" style="cursor:pointer;" onclick="ctz.cambioEstado('{{=ctz.id}}', '{{=ctz.clientes_nombre}}',1);">Bloqueado</span>
+		        				{{pass}}
+			        			<span class="badge badge-secondary" style="display: none;cursor:none;" id="spanEstado_mosatrar_{{=ctz.id}}">
+			        				<i class="fas fa-spinner fa-spin" style="color: white;"></i>
+			        			</span>
+			        		</td>
+			        		<td>
+			        			{{=getProyectosCliente(ctz.id)}}
+			        		</td>
+			        		<td>
+						        {{=getUsuariosCliente(ctz.id)}}
+			        		</td>
+			        		<td>
+			        			{{=getNotificacionesCliente(ctz.id)}}
+			        		</td>
+			        	</tr>
+			        {{ pass }}
+		        </tbody>
+		    </table>
+		</div>
+	{{else:}}
+		<div class="container" id="contenedorVacioCotizacion">
+			<div class="row">
+				<div class="col col-lg-12">
+					<blockquote>
+	                  <p>En estos momentos no tienes clientes creados.</p>
+	                  <small>Para crear un cliente primero cree una cotización.<cite title="Source Title"><a href="{{=URL('cotizaciones','listCotizaciones')}}" onclick="ctz.primeraCotizacion();">Click aquí..</a></cite></small>
+	                </blockquote>
+				</div>	
+			</div>
+		</div>		
+	{{pass}}
+	<div id="verProyectos" style="display: none;"></div>
+	<div id="nuevaCotizacion"    style="display: none;">{{#=nuevaCotizacion()}}</div>
+	<div id="editarCotizaciones" style="display: none;"></div>
+</div>
+{{block page_js}}	
+	<script src="{{=URL('static','js/clientes/clientes.js')}}"></script>
+{{end page_js}}

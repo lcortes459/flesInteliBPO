@@ -1,0 +1,27 @@
+{{extend plantilla()}}
+<div id="listadoProyectos">
+  <div class="web2py_grid">
+  	<div class="row">
+      {{for pro in proyectos:}}
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h4>{{=pro.proyectos_nombre_proyecto}}</h4>
+              <p>{{=pro.proyectos_cantidad_predios}} <br> Inmuebles </p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-home"></i>
+            </div>
+            <a href="#!" 
+              class="small-box-footer"
+               onclick="pro.detalleProyecto('listadoProyectos','detalleProyecto','{{=pro.id}}','{{=pro.proyectos_nombre_proyecto}}','{{=db.clientes[empresa].clientes_nombre}}','{{=empresa}}');">Más info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      {{pass}}
+    </div>
+  </div>
+</div>
+<div id="detalleProyecto" style="display: none;"></div>
+{{block page_js}}	
+	<script src="{{=URL('static','js/proyectos/proyectos.js')}}"></script>
+{{end page_js}}

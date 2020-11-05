@@ -1,0 +1,97 @@
+{{ for item in cotizaciones: }}
+    <div class="row">
+        <div class="col-sm-12 col-xl-6">
+            <ul class="list-group">
+                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Codigo</b>
+                    <span class="">
+                        <b> {{=item.cotizaciones_codigo}}</b>
+                    </span>
+                </li>
+                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Nit</b>
+                    <span class="">
+                        <b>{{=item.cotizaciones_nit_proyecto}}</b>
+                    </span>
+                </li>
+                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Ciudad</b>
+                    <span class="">
+                        <b>{{=db.ciudades[item.cotizaciones_ciudad].ciudades_nombre}}</b>
+                    </span>
+                </li>
+                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Dirección</b>
+                    <span class="">
+                        <b>{{=item.cotizaciones_direccion_proyecto}}</b>
+                    </span>
+                </li>
+                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Administrador</b>
+                    <span class="">
+                        <b>{{=item.cotizaciones_nombre_administrador}}</b>
+                    </span>
+                </li>
+                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Telefono</b>
+                    <span class="">
+                        <b>{{=item.cotizaciones_telefono_administrador}}</b>
+                    </span>
+                </li>
+                 <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Interiores</b>
+                    <span class="">
+                        <b>{{=item.cotizaciones_cantidad_interiores}}</b>
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-12 col-xl-6">
+            <ul class="list-group">
+                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Valor</b>
+                    <span class="">
+                        <b> {{=SetMoneda(float(db.planes[item.cotizaciones_plan].planes_valor))}}</b>
+                    </span>
+                </li>
+                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Celular</b>
+                    <span class="">
+                        <b>{{=item.cotizaciones_celular_administrador}}</b>
+                    </span>
+                </li>
+                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Email</b>
+                    <span class="">
+                        <b>{{=item.cotizaciones_email_administrador}}</b>
+                    </span>
+                </li>
+                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Estado</b>
+                    <span class="">
+                      <b>{{=item.cotizaciones_estado}}</b>
+                    </span>
+                </li>
+                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Responsable</b>
+                    <span class="">
+                        <b>{{=db.auth_user[item.cotizaciones_responsable_creacion].first_name}} {{=db.auth_user[item.cotizaciones_responsable_creacion].last_name}}</b>
+                    </span>
+                </li>
+                <!-- Dabriela Vargas -->
+                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Fecha Creación</b>
+                    <span class="">
+                        <b>{{=fechaFormato(item.cotizaciones_fecha_creacion,'fecha')}} {{=fechaFormato(item.cotizaciones_hora_creacion,'hora')}}</b>
+                    </span>
+                </li>
+                 <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                    <b>Predios</b>
+                    <span class="">
+                        <b>{{=item.cotizaciones_cantidad_predios}}</b>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+{{ pass }}

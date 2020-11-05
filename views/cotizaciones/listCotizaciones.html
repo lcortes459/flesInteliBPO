@@ -1,0 +1,128 @@
+{{extend plantilla()}}
+<div class="web2py_grid">
+	{{if len(cotizaciones)>0:}}
+		<div id="listadoCotizaciones">
+			<table id="idListadoCotizacionesTable" class="display" style="width:100%">
+		        <thead>
+		            <tr>
+		                <th>Código</th>
+		                <th>Proyecto/Cliente</th>
+		                <th>Ciudad</th>
+		                <!-- <th>Interiores</th> -->
+		                <th>Predios</th>
+		                <th>Estado</th>
+		                <th></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		        	{{ for ctz in cotizaciones: }}
+			        	<tr id="idTrCotizacion_{{=ctz.id}}">
+			        		<td>{{=ctz.cotizaciones_codigo}}</td>
+			        		<td>{{=ctz.cotizaciones_nombre_proyecto}}</td>
+			        		<td>{{=db.ciudades[ctz.cotizaciones_ciudad].ciudades_nombre}}</td>
+			        		<!-- <td>{{#=ctz.cotizaciones_cantidad_interiores}}</td> -->
+			        		<td>{{=ctz.cotizaciones_cantidad_predios}}</td>
+			        		<td >
+			        			<span class="badge badge-secondary" id="spanEstado_{{=ctz.id}}" style="cursor:pointer;" onclick="ctz.cambioEstado('{{=ctz.id}}', '{{=ctz.cotizaciones_nombre_proyecto}}');">{{=ctz.cotizaciones_estado}}</span>
+			        			<span class="badge badge-secondary" style="display: none;" id="spanEstado_cancelado_{{=ctz.id}}">Cancelada</span>
+			        			<span class="badge badge-secondary" style="display: none;" id="spanEstado_ejecutado_{{=ctz.id}}">Ejecutada</span>
+			        			<span class="badge badge-secondary" style="display: none;cursor:none;" id="spanEstado_mosatrar_{{=ctz.id}}">
+			        				<i class="fas fa-spinner fa-spin" style="color: white;"></i>
+			        			</span>
+			        		</td>
+			        		<td>
+			        			<div class="row">
+						            <div class="col-sm-3 col-md-3">
+						            	<i 
+						            		class="fa fa-eye" 
+						            		style="color: grey;cursor:pointer;"
+						                	data-toggle="tooltip" 
+						                	data-placement="top" 
+						                	title="Ver Cotización"
+						                	onclick="ctz.siguienteDiv('listadoCotizaciones','verCotizaciones','{{=ctz.id}}', '{{=ctz.cotizaciones_nombre_proyecto}}');">
+						                 </i>
+						            </div>
+						            <div class="col-sm-3 col-md-3" id="idDivEditar_{{=ctz.id}}">
+						            	<i 
+						            		class="fas fa-pen" 
+						            		style="color: grey;cursor:pointer;"
+						                	data-toggle="tooltip" 
+						                	data-placement="top" 
+						                	title="Editar Cotización"
+						                	onclick="ctz.siguienteDiv('listadoCotizaciones','editarCotizaciones','{{=ctz.id}}', '{{=ctz.cotizaciones_nombre_proyecto}}');">
+						                </i>
+						            </div>
+						            <div class="col-sm-3 col-md-3" id="idDivEmail_{{=ctz.id}}">
+						            	<i 
+						            		class="fas fa-envelope" 
+						            		style="color: grey;cursor:pointer;" 
+						                	data-toggle="tooltip" 
+						                	data-placement="top" 
+						                	title="Enviar Email"
+						                	id="btnEmailMostar_{{=ctz.id}}" 
+						                	onclick="ctz.envioEmail('{{=ctz.id}}');">
+						                </i>
+						              	<i 
+						              		class="fas fa-spinner fa-spin" 
+						              		style="color: grey;cursor:pointer;display: none;"
+						              		data-toggle="tooltip" 
+					                		data-placement="top" 
+					                		title="Enviando Eamil"
+					                		id="btnEmailMostarEnvio_{{=ctz.id}}">
+						              	</i>
+						            </div>
+						            <div class="col-sm-3 col-md-3" id="idDivEjecutar_{{=ctz.id}}">
+						            	<i 
+						            		class="fa fa-play" 
+						            		style="color: grey;cursor:pointer;"
+						                	data-toggle="tooltip" 
+						                	data-placement="top" 
+						                	title="Ejecutar Orden Servicio"
+						                	id="btnEjecutarMostar_{{=ctz.id}}" 
+						                	onclick="ctz.ejecutarOrdenServicio('{{=ctz.id}}');">
+						               	</i>
+						               	<i 
+						               		class="fas fa-spinner fa-spin"
+						               		data-toggle="tooltip" 
+						                	data-placement="top" 
+						                	title="Ejecutando Orden Servicio...."
+						                	style="display: none;color: grey;" 
+						                	id="btnEjecutarMostarEjecutar_{{=ctz.id}}">
+						               	</i>
+						              	<i 
+						              		class="fas fa-check"
+						                	data-toggle="tooltip" 
+						                	data-placement="top" 
+						                	title="Orden Servicio Ejecutada"
+						                	style="display: none;cursor:none;color: grey;" 
+						                	id="btnEjecutarFinalEjecutar_{{=ctz.id}}">
+						                </i>
+						            </div>
+						        </div>
+			        		</td>
+			        	</tr>
+			        {{ pass }}
+		        </tbody>
+		    </table>
+		</div>
+	{{else:}}
+		<div class="container" id="contenedorVacioCotizacion">
+			<div class="row">
+				<div class="col col-lg-12">
+					<blockquote>
+	                  <p>En estos momentos no tienes cotizaciones creadas/abiertas.</p>
+	                  <small>Para crear una cotización <cite title="Source Title"><a href="#!" onclick="ctz.primeraCotizacion();">Click aquí..</a></cite></small>
+	                </blockquote>
+				</div>	
+			</div>
+		</div>		
+	{{pass}}
+	<div id="nuevaCotizacion"    style="display: none;">{{=nuevaCotizacion()}}</div>
+	<div id="verCotizaciones"    style="display: none;"></div>
+	<div id="editarCotizaciones" style="display: none;"></div>
+</div>
+{{block page_js}}
+	<script>
+	</script>	
+	<script src="{{=URL('static','js/cotizaciones/cotizaciones.js')}}"></script>
+{{end page_js}}

@@ -1,0 +1,80 @@
+{{if len(proyectos)>0:}}
+	<div id="listadoProyectos" class="table-responsive">
+		<table id="idListadoProyectosTable" class="display" style="width:100%">
+	        <thead>
+	            <tr>
+	                <th>Proyecto</th>
+	                <th>Nit</th>
+	                <th>Ciudad</th>
+	                <th>Administrador</th>
+	                <th>Celular</th>
+	                <th>Email</th>
+	                <th>Estado</th>
+	                <th>Usuarios</th>
+	                <th>Notificaciones</th>
+	                <th>Predios</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        	{{ for ctz in proyectos: }}
+		        	<tr id="idTrProyecto_{{=ctz.id}}">
+		        		<td>{{=ctz.proyectos_nombre_proyecto}}</td>
+		        		<td>{{=ctz.proyectos_nit_proyecto}}</td>
+		        		<td>{{=db.ciudades[ctz.proyectos_ciudad].ciudades_nombre}}</td>
+		        		<td>{{=ctz.proyectos_nombre_administrador}}</td>
+		        		<td>{{=ctz.proyectos_celular_administrador}}</td>
+		        		<td>{{=ctz.proyectos_email_administrador}}</td>
+		        		<td id="idTdProyecto_{{=ctz.id}}">
+		        			{{if ( (ctz.proyectos_estado == 'True') or (ctz.proyectos_estado == True) ):}}
+		        				<span class="badge badge-success" id="spanEstado_proyecto_{{=ctz.id}}" style="cursor:pointer;" onclick="ctz.cambioEstadoProyecto('{{=ctz.id}}', '{{=ctz.proyectos_nombre_proyecto}}',0);">Activo</span>
+	        				{{else:}}
+	        					<span class="badge badge-danger" id="spanEstado_proyecto_{{=ctz.id}}" style="cursor:pointer;" onclick="ctz.cambioEstadoProyecto('{{=ctz.id}}', '{{=ctz.proyectos_nombre_proyecto}}',1);">Bloqueado</span>
+	        				{{pass}}
+		        			<span class="badge badge-secondary" style="display: none;cursor:none;" id="spanEstado_mosatrar_proyecto_{{=ctz.id}}">
+		        				<i class="fas fa-spinner fa-spin" style="color: white;"></i>
+		        			</span>
+		        		</td>
+		        		<td>
+		        			{{=getUsuariosProyectos(ctz.id)}}
+		        		</td>
+		        		<td>
+		        			{{=getNotificacionesProyecto(ctz.id)}}
+		        		</td>
+		        		<td>
+		        			<a  
+					            class="btn btn-app" 
+					            style="margin: 0px 10px 0px 0px; min-width: 30px; height: 35px;"
+					            onclick="ctz.verProyecto('listadoProyectos','verProyecto','{{=ctz.id}}', '{{=ctz.proyectos_nombre_proyecto}}');"
+					        >
+						        <span class="badge badge-primary" style="font-size: 12px;">{{=ctz.proyectos_cantidad_predios}}</span>
+				            	<i 
+				            		class="fa fa-home" 
+				            		style="color: grey;margin-top:-7px;"
+				                	>
+				                </i>
+				            </a>
+		        		</td>
+		        	</tr>
+		        {{ pass }}
+	        </tbody>
+	    </table>
+	</div>
+{{else:}}
+	<div class="container" id="contenedorVacioCotizacion">
+		<div class="row">
+			<div class="col col-lg-12">
+				<blockquote>
+                  <p>En estos momentos no tienes proyectos creados.</p>
+                  <small>Para crear un cliente primero cree una cotización.<cite title="Source Title"><a href="{{=URL('cotizaciones','listCotizaciones')}}" onclick="ctz.primeraCotizacion();">Click aquí..</a></cite></small>
+                </blockquote>
+			</div>	
+		</div>
+	</div>		
+{{pass}}
+<div id="verProyecto" style="display: none;"></div>
+<div id="verUsuarios" style="display: none;"></div>
+<div id="nuevoProyecto" style="display: none;"></div>
+<div id="editarProyecto" style="display: none;"></div>
+{{block page_js}}	
+	<script src="{{=URL('static','js/clientes/proyectos.js')}}"></script>
+{{end page_js}}

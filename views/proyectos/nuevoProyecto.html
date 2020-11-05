@@ -1,0 +1,86 @@
+<form id="formularioProyecto" onsubmit="return false;">
+
+    <div class="row">
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="proyectos_nombre_proyecto">Proyecto*</label>
+            <input type="text" class="form-control" id="proyectos_nombre_proyecto" name="proyectos_nombre_proyecto" placeholder="Nombre Proyecto">
+        </div>
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="proyectos_nit_proyecto">Nit *</label>
+            <input type="hidden" value="COTGUA-" id="proyectos_codigo" name="proyectos_codigo">
+            <input type="hidden" value="True" id="proyectos_estado" name="proyectos_estado">
+            <input type="hidden" value="{{=multi_data.idCliente}}" id="proyectos_cliente" name="proyectos_cliente">
+            <input type="hidden" value="{{=idUser}}" id="proyectos_responsable_creacion" name="proyectos_responsable_creacion">
+            <input type="hidden" value="{{=int(str(fecha('fecha')).replace('-',''))}}" id="proyectos_fecha_creacion" name="proyectos_fecha_creacion">
+            <input type="hidden" value="{{=int(str(fecha('hora')).replace(':',''))}}" id="proyectos_hora_creacion" name="proyectos_hora_creacion">
+            <input type="text" class="form-control" id="proyectos_nit_proyecto" name="proyectos_nit_proyecto" placeholder="Nit Proyecto">
+        </div>
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="proyectos_ciudad">Ciudad *</label>
+            <select class="form-control" style="width: 100%;" id="proyectos_ciudad" name="proyectos_ciudad">
+        		<option value="">Seleccione una ciudad</option>
+        		{{for c in multi_ciudades:}}
+        			<option value="{{=c.id}}">{{=c.ciudades_nombre}}</option>
+        		{{pass}}
+          	</select>
+        </div>
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="proyectos_direccion_proyecto">Dirección *</label>
+            <input type="text" class="form-control" id="proyectos_direccion_proyecto" name="proyectos_direccion_proyecto" placeholder="Direccion Proyecto">
+        </div>
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="proyectos_nombre_administrador">Administrador/Representante *</label>
+            <input type="text" class="form-control" id="proyectos_nombre_administrador" name="proyectos_nombre_administrador" placeholder="Administrador Proyecto">
+        </div>
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="proyectos_telefono_administrador">Telefono (opcional)</label>
+            <input type="text" class="form-control" id="proyectos_telefono_administrador" name="proyectos_telefono_administrador" placeholder="Telefono Proyecto">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="proyectos_celular_administrador">Celular *</label>
+            <input type="text" class="form-control" id="proyectos_celular_administrador" name="proyectos_celular_administrador" placeholder="Celular Proyecto">
+        </div>
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="proyectos_email_administrador">Email *</label>
+            <input type="text" class="form-control" id="proyectos_email_administrador" name="proyectos_email_administrador" placeholder="Eamil Proyecto" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$">
+        </div>
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="proyectos_cantidad_interiores">Cantidad interioes *</label>
+            <input type="text" class="form-control" id="proyectos_cantidad_interiores" name="proyectos_cantidad_interiores" placeholder="Cantidad Interiores">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="proyectos_cantidad_predios">Cantidad predios *</label>
+            <input type="text" class="form-control" id="proyectos_cantidad_predios" name="proyectos_cantidad_predios" placeholder="Cantidad Predios">
+        </div>
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="proyectos_color_corporativo">Color corporativo (opcional)</label>
+           	<input type="color" value="#ffffff" class="form-control" id="proyectos_color_corporativo" name="proyectos_color_corporativo" placeholder="Color corporativo">
+        </div>
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="proyectos_tipo_letra">Estilo letra (opcional)</label>
+           	<input type="text" value="italic" class="form-control" id="proyectos_tipo_letra" name="proyectos_tipo_letra" placeholder="Estilo letra">
+        </div>
+    </div>
+    <div class="row" id="botoneraGurdarProyecto">
+        <div class="form-group col-sm-12 col-md-6 col-lg-6">
+            <a href="#!" class="btn btn-block btn-secondary" onclick="template.limpiar('formularioProyecto','proyectos_nombre_proyecto');">Limpiar proyecto</a>
+        </div>
+        <div class="form-group col-sm-12 col-md-6 col-lg-6">
+            <a href="#!" class="btn btn-block btn-primary" id="btnGuardarProyecto" onclick="ctz.guardarProyecto();">Crear proyecto</a>
+        </div>
+    </div>
+    <div class="row" id="botoneraGurdando" style="display:none;">
+        <div class="col col-12">
+            <a href="#!" class="btn btn-primary btn-block disabled">
+                <span class="spinner-grow spinner-grow-sm"></span>
+                Un momento estamos guardando sus datos
+                <span class="spinner-grow spinner-grow-sm"></span>
+                <!-- <i class="fa fa-spinner fa-spen"></i> -->
+            </a>
+        </div>
+    </div>
+</form>

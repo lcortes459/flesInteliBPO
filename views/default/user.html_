@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{=str(request.application).capitalize()}} | Log In</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/fontawesome-free/css/all.min.css')}}">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{=URL('static','template/dist/css/adminlte.min.css')}}">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="shortcut icon" href="{{=URL('static','images/logoGuardianweb.png')}}" type="image/x-icon">
+  <link rel="apple-touch-icon" href="{{=URL('static','images/logoGuardianweb.png')}}">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/toastr/toastr.min.css')}}">
+  <style type="text/css">
+        .biselado {
+            border: 1px solid #000; /* Color del borde, debe ser más oscuro que fondo */
+            background: #000; /* Fondo */
+            border-radius: 0px;  /* Bordes redondos */
+            box-shadow: inset 3px 3px 3px rgba(255,255,255,.7), inset -2px -2px 3px rgba(0,0,0,.1), 2px 2px 10px rgba(0,0,0,.1);
+            text-shadow: 1px 1px 1px rgba(255,255,255,.9);  /* Sombra del texto */
+            /*text-align: center;   Alineación del texto */
+        }
+    </style>
+</head>
+<body class="hold-transition login-page" id="body" style="background-color:#fff;">
+   <div class="login-box" style="margin-bottom:155px;" id="divLogin">
+        <div class="login-logo">
+            <a href="#!">
+                <img src="{{=URL('static','images/logoGuardianweb.png')}}" style="width:100%;" alt="{{=str(request.application).capitalize()}}">
+            </a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card biselado">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg"><b>Ingrese sus credenciales para ingresar a {{=str(request.application).capitalize()}}</b></p>
+
+                <form class="m-login__form m-form" id="loginform">
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" name="emailIngreso" value="" placeholder="Email" id="emailIngreso">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" name="passIngreso" class="form-control" placeholder="Password" value="" id="passIngreso">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="validando" style="display:none;">
+                        <div class="col-12">
+
+                            <button class="btn btn-primary btn-block" disabled>
+                                <i class="fa fa-spinner fa-spin"></i> &nbsp;&nbsp;&nbsp;
+                                Validando Información</button>
+                        </div>
+                    </div>
+                    <div class="row" id="btns_ingreso">
+                        <div class="col-12">
+                            <div class="icheck-primary">
+                                <input type="checkbox" checked name="inputCheckbox" id="inputCheckbox">
+                                <label for="inputCheckbox">
+                                        Recuerdame
+                                    </label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary btn-block" id="btnIngreso">Ingresar</button>
+                        </div>
+                    </div>
+                </form>
+                <p class="mb-1">
+                    <a href="#!" id="olvidePss">Olvide mi password</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- /.login-box -->
+
+    <div class="lockscreen-wrapper" style="display:none; margin-bottom:155px;" id="divLockScreen">
+        <div class="lockscreen-logo">
+            <a href="#!">
+                <img src="{{=URL('static','images/logoGuardianweb.png')}}" style="width:100%;" alt="{{=str(request.application).capitalize()}}">
+            </a>
+        </div>
+        <!-- User name -->
+        <div class="lockscreen-name" id="divNombreUsuario"></div>
+
+        <!-- START LOCK SCREEN ITEM -->
+        <div class="lockscreen-item">
+            <!-- lockscreen image -->
+            <div class="lockscreen-image" id="divImg">
+                <img src="{{=URL('static','template/dist/img/user1-128x128.jpg')}}" alt="User Image">
+            </div>
+            <!-- /.lockscreen-image -->
+
+            <!-- lockscreen credentials (contains the form) -->
+            <form class="lockscreen-credentials" id="FormIngresoSession">
+                <div class="input-group">
+                    <input type="password" class="form-control" placeholder="Password" id="passwordSession">
+
+                    <div class="input-group-append">
+                        <button type="button" onclick="ing.ingresoSession()" class="btn">
+                            <i class="fas fa-arrow-right text-muted"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <form class="lockscreen-credentials" id="validandoSession" style="display:none;">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Validando password">
+
+                    <div class="input-group-append">
+                        <button type="button" disabled class="btn">
+                            <i class="fa fa-spinner fa-spin"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- /.lockscreen credentials -->
+
+        </div>
+        <!-- /.lockscreen-item -->
+        <div id="ingOtroUsuario">  
+            <div class="help-block text-center">
+                Ingresa el password para continuar.
+            </div>
+            <div class="text-center">
+                <a href="#!"  onclick="ing.limpiarSession()">Iniciar sessión con otro usuario</a>
+            </div>
+        </div>
+    </div>
+
+<!-- jQuery -->
+<script src="{{=URL('static','template/plugins/jquery/jquery.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{=URL('static','template/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{=URL('static','template/dist/js/adminlte.min.js')}}"></script>
+<script src="{{=URL('static','template/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src="{{=URL('static','template/plugins/toastr/toastr.min.js')}}"></script>
+<script src="{{=URL('static','js/default/users.js')}}"></script>
+
+</body>
+</html>

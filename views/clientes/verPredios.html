@@ -1,0 +1,62 @@
+{{if len(predios)>0:}}
+	<div id="listadoPredio" class="table-responsive">
+		<table id="idListadoPrediosTable" class="display" style="width:100%">
+	        <thead>
+	            <tr>
+	                <th>Componente</th>
+	                <th>Piso/Espacio</th>
+	                <th>Identificador</th>
+	                <th>Predio</th>
+	                <th>Código</th>
+	                <th>Estado</th>
+	                <th>Detalle</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        	{{ for ctz in predios: }}
+		        	<tr id="idTrPredio_{{=ctz.id}}">
+		        		<td>Componente - {{=db.interioresProyectos[ctz.interioresPredios_interior].interioresProyectos_interiores}}</td>
+		        		<td>{{=ctz.interioresPredios_piso}}</td>
+		        		<td>{{=ctz.interioresPredios_identificador}}</td>
+		        		<td>{{=ctz.interioresPredios_predio}}</td>
+		        		<td>{{=ctz.interioresPredios_codigo}}</td>
+		        		<td id="idTdPredio_{{=ctz.id}}">
+		        			{{if ( (ctz.interioresPredios_estado == 'True') or (ctz.interioresPredios_estado == True) ):}}
+		        				<span class="badge badge-success" id="spanEstado_predio_{{=ctz.id}}" style="cursor:pointer;" onclick="ctz.cambioEstadoProyecto('{{=ctz.id}}', '{{=ctz.interioresPredios_predio}}',0);">Activo</span>
+	        				{{else:}}
+	        					<span class="badge badge-danger" id="spanEstado_predio_{{=ctz.id}}" style="cursor:pointer;" onclick="ctz.cambioEstadoProyecto('{{=ctz.id}}', '{{=ctz.interioresPredios_predio}}',1);">Bloqueado</span>
+	        				{{pass}}
+		        			<span class="badge badge-secondary" style="display: none;cursor:none;" id="spanEstado_mosatrar_predio_{{=ctz.id}}">
+		        				<i class="fas fa-spinner fa-spin" style="color: white;"></i>
+		        			</span>
+		        		</td>
+		        		<td>
+		        			<a  
+					            class="btn btn-app" 
+					            style="margin: 0px 10px 0px 0px; min-width: 30px; height: 35px;"
+					            onclick="ctz.detallePredio('listadoPredio','detallePredio','{{=ctz.id}}','{{=ctz.interioresPredios_predio}}','{{#=db.clientes[ctz.proyectos_cliente].clientes_nombre}}','{{#=ctz.proyectos_cliente}}');"
+					        >
+				            	<i 
+				            		class="fa fa-eye" 
+				            		style="color: grey;margin-top:-7px;"
+				                	>
+				                </i>
+				            </a>
+		        		</td>
+		        	</tr>
+		        {{ pass }}
+	        </tbody>
+	    </table>
+	</div>
+{{else:}}
+	<div class="container" id="contenedorVacioCotizacion">
+		<div class="row">
+			<div class="col col-lg-12">
+				<blockquote>
+                  <p>En estos momentos no tienes predios creados.</p>
+                  <small>Para crear un predio.<cite title="Source Title"><a href="#!" onclick="ctz.nuevoPredio('predios','nuevoPredio','{{=multi_data.idArea}}');">Click aquí..</a></cite></small>
+                </blockquote>
+			</div>	
+		</div>
+	</div>		
+{{pass}}

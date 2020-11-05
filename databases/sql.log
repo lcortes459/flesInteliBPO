@@ -1,0 +1,699 @@
+timestamp: 2020-04-09T09:59:00.834802
+CREATE TABLE "auth_user"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" CHAR(128),
+    "last_name" CHAR(128),
+    "email" CHAR(512),
+    "password" CHAR(512),
+    "registration_key" CHAR(512),
+    "reset_password_key" CHAR(512),
+    "registration_id" CHAR(512)
+);
+success!
+timestamp: 2020-04-09T09:59:00.860259
+CREATE TABLE "auth_group"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "role" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2020-04-09T09:59:00.870503
+CREATE TABLE "auth_membership"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2020-04-09T09:59:00.881525
+CREATE TABLE "auth_permission"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
+    "name" CHAR(512),
+    "table_name" CHAR(512),
+    "record_id" INTEGER
+);
+success!
+timestamp: 2020-04-09T09:59:00.899589
+CREATE TABLE "auth_event"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "time_stamp" TIMESTAMP,
+    "client_ip" CHAR(512),
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "origin" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2020-04-09T09:59:00.917084
+CREATE TABLE "auth_cas"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "created_on" TIMESTAMP,
+    "service" CHAR(512),
+    "ticket" CHAR(512),
+    "renew" CHAR(1)
+);
+success!
+timestamp: 2020-11-04T18:38:07.473018
+CREATE TABLE `paises`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `paises_nombre` VARCHAR(512),
+    `paises_codigo` VARCHAR(512),
+    `paises_estado` VARCHAR(512),
+    `paises_fecha_creacion` VARCHAR(512),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2020-11-04T18:41:07.488011
+CREATE TABLE "paises"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "paises_nombre" CHAR(512),
+    "paises_codigo" CHAR(512),
+    "paises_estado" CHAR(512),
+    "paises_fecha_creacion" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T18:41:07.504951
+CREATE TABLE "paises_archive"(
+    "current_record" INTEGER REFERENCES "paises" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "paises_nombre" CHAR(512),
+    "paises_codigo" CHAR(512),
+    "paises_estado" CHAR(512),
+    "paises_fecha_creacion" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T18:41:07.513738
+CREATE TABLE "ciudades"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "ciudades_pais" INTEGER REFERENCES "paises" ("id") ON DELETE CASCADE  ,
+    "ciudades_nombre" CHAR(512),
+    "ciudades_codigo" CHAR(512),
+    "ciudades_estado" CHAR(512),
+    "ciudades_fecha_creacion" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T18:41:07.521924
+CREATE TABLE "ciudades_archive"(
+    "current_record" INTEGER REFERENCES "ciudades" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "ciudades_pais" INTEGER REFERENCES "paises" ("id") ON DELETE CASCADE  ,
+    "ciudades_nombre" CHAR(512),
+    "ciudades_codigo" CHAR(512),
+    "ciudades_estado" CHAR(512),
+    "ciudades_fecha_creacion" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T18:41:07.530404
+CREATE TABLE "planes"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "planes_tipo" CHAR(512),
+    "planes_nombre" CHAR(512),
+    "planes_valor" CHAR(512),
+    "planes_minimo_rango_proyectos" CHAR(512),
+    "planes_maximo_rango_proyectos" CHAR(512),
+    "planes_estado" CHAR(512),
+    "planes_fecha_creacion" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T18:41:07.539505
+CREATE TABLE "planes_archive"(
+    "current_record" INTEGER REFERENCES "planes" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "planes_tipo" CHAR(512),
+    "planes_nombre" CHAR(512),
+    "planes_valor" CHAR(512),
+    "planes_minimo_rango_proyectos" CHAR(512),
+    "planes_maximo_rango_proyectos" CHAR(512),
+    "planes_estado" CHAR(512),
+    "planes_fecha_creacion" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T18:41:07.548681
+CREATE TABLE "cotizaciones"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "cotizaciones_codigo" CHAR(512),
+    "cotizaciones_nombre_proyecto" CHAR(512),
+    "cotizaciones_nit_proyecto" CHAR(512),
+    "cotizaciones_ciudad" INTEGER REFERENCES "ciudades" ("id") ON DELETE CASCADE  ,
+    "cotizaciones_direccion_proyecto" CHAR(512),
+    "cotizaciones_nombre_administrador" CHAR(512),
+    "cotizaciones_celular_administrador" CHAR(512),
+    "cotizaciones_email_administrador" CHAR(512),
+    "cotizaciones_telefono_administrador" CHAR(512),
+    "cotizaciones_cantidad_interiores" CHAR(512),
+    "cotizaciones_cantidad_predios" CHAR(512),
+    "cotizaciones_plan" INTEGER REFERENCES "planes" ("id") ON DELETE CASCADE  ,
+    "cotizaciones_observacion" CHAR(512),
+    "cotizaciones_responsable_creacion" CHAR(512),
+    "cotizaciones_estado" CHAR(512),
+    "cotizaciones_fecha_creacion" INTEGER,
+    "cotizaciones_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.558895
+CREATE TABLE "cotizaciones_archive"(
+    "current_record" INTEGER REFERENCES "cotizaciones" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "cotizaciones_codigo" CHAR(512),
+    "cotizaciones_nombre_proyecto" CHAR(512),
+    "cotizaciones_nit_proyecto" CHAR(512),
+    "cotizaciones_ciudad" INTEGER REFERENCES "ciudades" ("id") ON DELETE CASCADE  ,
+    "cotizaciones_direccion_proyecto" CHAR(512),
+    "cotizaciones_nombre_administrador" CHAR(512),
+    "cotizaciones_celular_administrador" CHAR(512),
+    "cotizaciones_email_administrador" CHAR(512),
+    "cotizaciones_telefono_administrador" CHAR(512),
+    "cotizaciones_cantidad_interiores" CHAR(512),
+    "cotizaciones_cantidad_predios" CHAR(512),
+    "cotizaciones_plan" INTEGER REFERENCES "planes" ("id") ON DELETE CASCADE  ,
+    "cotizaciones_observacion" CHAR(512),
+    "cotizaciones_responsable_creacion" CHAR(512),
+    "cotizaciones_estado" CHAR(512),
+    "cotizaciones_fecha_creacion" INTEGER,
+    "cotizaciones_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.568372
+CREATE TABLE "ordenesServicio"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "ordenesServicios_cotizacion" INTEGER REFERENCES "cotizaciones" ("id") ON DELETE CASCADE  ,
+    "ordenesServicios_codigo" CHAR(512),
+    "ordenesServicios_responsable_creacion" CHAR(512),
+    "ordenesServicios_responsable_ejecucion" CHAR(512),
+    "ordenesServicios_estado" CHAR(512),
+    "ordenesServicios_fecha_creacion" INTEGER,
+    "ordenesServicios_hora_creacion" INTEGER,
+    "ordenesServicios_fecha_ejecucion" INTEGER,
+    "ordenesServicios_hora_ejecucion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.576918
+CREATE TABLE "ordenesServicio_archive"(
+    "current_record" INTEGER REFERENCES "ordenesServicio" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "ordenesServicios_cotizacion" INTEGER REFERENCES "cotizaciones" ("id") ON DELETE CASCADE  ,
+    "ordenesServicios_codigo" CHAR(512),
+    "ordenesServicios_responsable_creacion" CHAR(512),
+    "ordenesServicios_responsable_ejecucion" CHAR(512),
+    "ordenesServicios_estado" CHAR(512),
+    "ordenesServicios_fecha_creacion" INTEGER,
+    "ordenesServicios_hora_creacion" INTEGER,
+    "ordenesServicios_fecha_ejecucion" INTEGER,
+    "ordenesServicios_hora_ejecucion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.585492
+CREATE TABLE "ordenesTrabajo"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "ordenesTrabajo_ordenServicio" INTEGER REFERENCES "ordenesServicio" ("id") ON DELETE CASCADE  ,
+    "ordenesTrabajo_codigo" CHAR(512),
+    "ordenesTrabajo_responsable_creacion" CHAR(512),
+    "ordenesTrabajo_responsable_ejecucion" CHAR(512),
+    "ordenesTrabajo_estado" CHAR(512),
+    "ordenesTrabajo_fecha_creacion" INTEGER,
+    "ordenesTrabajo_hora_creacion" INTEGER,
+    "ordenesTrabajo_fecha_ejecucion" INTEGER,
+    "ordenesTrabajo_hora_ejecucion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.594962
+CREATE TABLE "ordenesTrabajo_archive"(
+    "current_record" INTEGER REFERENCES "ordenesTrabajo" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "ordenesTrabajo_ordenServicio" INTEGER REFERENCES "ordenesServicio" ("id") ON DELETE CASCADE  ,
+    "ordenesTrabajo_codigo" CHAR(512),
+    "ordenesTrabajo_responsable_creacion" CHAR(512),
+    "ordenesTrabajo_responsable_ejecucion" CHAR(512),
+    "ordenesTrabajo_estado" CHAR(512),
+    "ordenesTrabajo_fecha_creacion" INTEGER,
+    "ordenesTrabajo_hora_creacion" INTEGER,
+    "ordenesTrabajo_fecha_ejecucion" INTEGER,
+    "ordenesTrabajo_hora_ejecucion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.604423
+CREATE TABLE "clientes"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "clientes_nombre" CHAR(512),
+    "clientes_nit" CHAR(512),
+    "clientes_ordenTrabajo" INTEGER REFERENCES "ordenesTrabajo" ("id") ON DELETE CASCADE  ,
+    "clientes_direccion" CHAR(512),
+    "clientes_responsable" CHAR(512),
+    "clientes_celular" CHAR(512),
+    "clientes_email" CHAR(512),
+    "clientes_ciudad" INTEGER REFERENCES "ciudades" ("id") ON DELETE CASCADE  ,
+    "clientes_estado" CHAR(512),
+    "clientes_tipo_letra" CHAR(512),
+    "clientes_cantidad_proyectos" INTEGER,
+    "clientes_color_corporativo" CHAR(512),
+    "clientes_responsable_creacion" CHAR(512),
+    "clientes_fecha_creacion" INTEGER,
+    "clientes_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.614281
+CREATE TABLE "clientes_archive"(
+    "current_record" INTEGER REFERENCES "clientes" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "clientes_nombre" CHAR(512),
+    "clientes_nit" CHAR(512),
+    "clientes_ordenTrabajo" INTEGER REFERENCES "ordenesTrabajo" ("id") ON DELETE CASCADE  ,
+    "clientes_direccion" CHAR(512),
+    "clientes_responsable" CHAR(512),
+    "clientes_celular" CHAR(512),
+    "clientes_email" CHAR(512),
+    "clientes_ciudad" INTEGER REFERENCES "ciudades" ("id") ON DELETE CASCADE  ,
+    "clientes_estado" CHAR(512),
+    "clientes_tipo_letra" CHAR(512),
+    "clientes_cantidad_proyectos" INTEGER,
+    "clientes_color_corporativo" CHAR(512),
+    "clientes_responsable_creacion" CHAR(512),
+    "clientes_fecha_creacion" INTEGER,
+    "clientes_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.624148
+CREATE TABLE "clienteDocumentos"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "clienteDocumentos_cliente" INTEGER REFERENCES "clientes" ("id") ON DELETE CASCADE  ,
+    "clienteDocumentos_logo" CHAR(512),
+    "clienteDocumentos_fecha_creacion" INTEGER,
+    "clienteDocumentos_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.633159
+CREATE TABLE "clienteDocumentos_archive"(
+    "current_record" INTEGER REFERENCES "clienteDocumentos" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "clienteDocumentos_cliente" INTEGER REFERENCES "clientes" ("id") ON DELETE CASCADE  ,
+    "clienteDocumentos_logo" CHAR(512),
+    "clienteDocumentos_fecha_creacion" INTEGER,
+    "clienteDocumentos_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.641773
+CREATE TABLE "proyectos"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "proyectos_codigo" CHAR(512),
+    "proyectos_nombre_proyecto" CHAR(512),
+    "proyectos_nit_proyecto" CHAR(512),
+    "proyectos_ciudad" INTEGER REFERENCES "ciudades" ("id") ON DELETE CASCADE  ,
+    "proyectos_direccion_proyecto" CHAR(512),
+    "proyectos_nombre_administrador" CHAR(512),
+    "proyectos_celular_administrador" CHAR(512),
+    "proyectos_email_administrador" CHAR(512),
+    "proyectos_telefono_administrador" CHAR(512),
+    "proyectos_cantidad_interiores" CHAR(512),
+    "proyectos_cantidad_predios" CHAR(512),
+    "proyectos_responsable_creacion" CHAR(512),
+    "proyectos_tipo_letra" CHAR(512),
+    "proyectos_color_corporativo" CHAR(512),
+    "proyectos_fecha_creacion" INTEGER,
+    "proyectos_hora_creacion" INTEGER,
+    "proyectos_estado" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T18:41:07.651752
+CREATE TABLE "proyectos_archive"(
+    "current_record" INTEGER REFERENCES "proyectos" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "proyectos_codigo" CHAR(512),
+    "proyectos_nombre_proyecto" CHAR(512),
+    "proyectos_nit_proyecto" CHAR(512),
+    "proyectos_ciudad" INTEGER REFERENCES "ciudades" ("id") ON DELETE CASCADE  ,
+    "proyectos_direccion_proyecto" CHAR(512),
+    "proyectos_nombre_administrador" CHAR(512),
+    "proyectos_celular_administrador" CHAR(512),
+    "proyectos_email_administrador" CHAR(512),
+    "proyectos_telefono_administrador" CHAR(512),
+    "proyectos_cantidad_interiores" CHAR(512),
+    "proyectos_cantidad_predios" CHAR(512),
+    "proyectos_responsable_creacion" CHAR(512),
+    "proyectos_tipo_letra" CHAR(512),
+    "proyectos_color_corporativo" CHAR(512),
+    "proyectos_fecha_creacion" INTEGER,
+    "proyectos_hora_creacion" INTEGER,
+    "proyectos_estado" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T18:41:07.661468
+CREATE TABLE "proyectosDocumentos"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "proyectosDocumentos_proyecto" INTEGER REFERENCES "proyectos" ("id") ON DELETE CASCADE  ,
+    "proyectosDocumentos_logo" CHAR(512),
+    "proyectosDocumentos_manual_convivencia" CHAR(512),
+    "proyectosDocumentos_fecha_creacion" INTEGER,
+    "proyectosDocumentos_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.668953
+CREATE TABLE "proyectosDocumentos_archive"(
+    "current_record" INTEGER REFERENCES "proyectosDocumentos" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "proyectosDocumentos_proyecto" INTEGER REFERENCES "proyectos" ("id") ON DELETE CASCADE  ,
+    "proyectosDocumentos_logo" CHAR(512),
+    "proyectosDocumentos_manual_convivencia" CHAR(512),
+    "proyectosDocumentos_fecha_creacion" INTEGER,
+    "proyectosDocumentos_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.676613
+CREATE TABLE "clientesProyectos"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "proyectos_cliente" INTEGER REFERENCES "clientes" ("id") ON DELETE CASCADE  ,
+    "proyectos_proyecto" INTEGER REFERENCES "proyectos" ("id") ON DELETE CASCADE  ,
+    "clientesProyectos_fecha_creacion" INTEGER,
+    "clientesProyectos_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.684509
+CREATE TABLE "clientesProyectos_archive"(
+    "current_record" INTEGER REFERENCES "clientesProyectos" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "proyectos_cliente" INTEGER REFERENCES "clientes" ("id") ON DELETE CASCADE  ,
+    "proyectos_proyecto" INTEGER REFERENCES "proyectos" ("id") ON DELETE CASCADE  ,
+    "clientesProyectos_fecha_creacion" INTEGER,
+    "clientesProyectos_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.692944
+CREATE TABLE "interioresProyectos"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "interioresProyectos_proyecto" INTEGER REFERENCES "proyectos" ("id") ON DELETE CASCADE  ,
+    "interioresProyectos_interiores" CHAR(512),
+    "interioresProyectos_fecha_creacion" INTEGER,
+    "interioresProyectos_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.701094
+CREATE TABLE "interioresProyectos_archive"(
+    "current_record" INTEGER REFERENCES "interioresProyectos" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "interioresProyectos_proyecto" INTEGER REFERENCES "proyectos" ("id") ON DELETE CASCADE  ,
+    "interioresProyectos_interiores" CHAR(512),
+    "interioresProyectos_fecha_creacion" INTEGER,
+    "interioresProyectos_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.709555
+CREATE TABLE "interioresPredios"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "interioresPredios_interior" INTEGER REFERENCES "interioresProyectos" ("id") ON DELETE CASCADE  ,
+    "interioresPredios_identificador" CHAR(512),
+    "interioresPredios_piso" CHAR(512),
+    "interioresPredios_predio" CHAR(512),
+    "interioresPredios_codigo" CHAR(512),
+    "interioresPredios_estado" CHAR(512),
+    "interioresPredios_responsable_creacion" CHAR(512),
+    "interioresPredios_fecha_creacion" INTEGER,
+    "interioresPredios_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.719326
+CREATE TABLE "interioresPredios_archive"(
+    "current_record" INTEGER REFERENCES "interioresPredios" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "interioresPredios_interior" INTEGER REFERENCES "interioresProyectos" ("id") ON DELETE CASCADE  ,
+    "interioresPredios_identificador" CHAR(512),
+    "interioresPredios_piso" CHAR(512),
+    "interioresPredios_predio" CHAR(512),
+    "interioresPredios_codigo" CHAR(512),
+    "interioresPredios_estado" CHAR(512),
+    "interioresPredios_responsable_creacion" CHAR(512),
+    "interioresPredios_fecha_creacion" INTEGER,
+    "interioresPredios_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.727861
+CREATE TABLE "propietarios"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "propietarios_nombres" CHAR(512),
+    "propietarios_apellidos" CHAR(512),
+    "propietarios_identificacion" CHAR(512),
+    "propietarios_genero" CHAR(512),
+    "propietarios_fecha_nacimiento" CHAR(512),
+    "propietarios_celular" CHAR(512),
+    "propietarios_fecha_creacion" INTEGER,
+    "propietarios_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.736866
+CREATE TABLE "propietarios_archive"(
+    "current_record" INTEGER REFERENCES "propietarios" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "propietarios_nombres" CHAR(512),
+    "propietarios_apellidos" CHAR(512),
+    "propietarios_identificacion" CHAR(512),
+    "propietarios_genero" CHAR(512),
+    "propietarios_fecha_nacimiento" CHAR(512),
+    "propietarios_celular" CHAR(512),
+    "propietarios_fecha_creacion" INTEGER,
+    "propietarios_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.746543
+CREATE TABLE "residentes"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "residentes_nombres" CHAR(512),
+    "residentes_apellidos" CHAR(512),
+    "residentes_identificacion" CHAR(512),
+    "residentes_genero" CHAR(512),
+    "residentes_fecha_nacimiento" CHAR(512),
+    "residentes_celular" CHAR(512),
+    "residentes_fecha_creacion" INTEGER,
+    "residentes_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.755341
+CREATE TABLE "residentes_archive"(
+    "current_record" INTEGER REFERENCES "residentes" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "residentes_nombres" CHAR(512),
+    "residentes_apellidos" CHAR(512),
+    "residentes_identificacion" CHAR(512),
+    "residentes_genero" CHAR(512),
+    "residentes_fecha_nacimiento" CHAR(512),
+    "residentes_celular" CHAR(512),
+    "residentes_fecha_creacion" INTEGER,
+    "residentes_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.763720
+CREATE TABLE "propietariosPredios"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "propietariosPredios_predio" INTEGER REFERENCES "interioresPredios" ("id") ON DELETE CASCADE  ,
+    "propietariosPredios_propietario" INTEGER REFERENCES "propietarios" ("id") ON DELETE CASCADE  ,
+    "propietariosPredios_estado" CHAR(512),
+    "propietariosPredios_fecha_creacion" INTEGER,
+    "propietariosPredios_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.771846
+CREATE TABLE "propietariosPredios_archive"(
+    "current_record" INTEGER REFERENCES "propietariosPredios" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "propietariosPredios_predio" INTEGER REFERENCES "interioresPredios" ("id") ON DELETE CASCADE  ,
+    "propietariosPredios_propietario" INTEGER REFERENCES "propietarios" ("id") ON DELETE CASCADE  ,
+    "propietariosPredios_estado" CHAR(512),
+    "propietariosPredios_fecha_creacion" INTEGER,
+    "propietariosPredios_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.779852
+CREATE TABLE "residentesPredios"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "residentesPredios_predio" INTEGER REFERENCES "interioresPredios" ("id") ON DELETE CASCADE  ,
+    "residentesPredios_residente" INTEGER REFERENCES "residentes" ("id") ON DELETE CASCADE  ,
+    "residentesPredios_estado" CHAR(512),
+    "residentesPredios_fecha_creacion" INTEGER,
+    "residentesPredios_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.787981
+CREATE TABLE "residentesPredios_archive"(
+    "current_record" INTEGER REFERENCES "residentesPredios" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "residentesPredios_predio" INTEGER REFERENCES "interioresPredios" ("id") ON DELETE CASCADE  ,
+    "residentesPredios_residente" INTEGER REFERENCES "residentes" ("id") ON DELETE CASCADE  ,
+    "residentesPredios_estado" CHAR(512),
+    "residentesPredios_fecha_creacion" INTEGER,
+    "residentesPredios_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.800704
+ALTER TABLE "auth_user" ADD "tipo" TEXT;
+timestamp: 2020-11-04T18:41:07.806658
+ALTER TABLE "auth_user" ADD "cliente" INTEGER REFERENCES "clientes" ("id") ON DELETE CASCADE  ;
+timestamp: 2020-11-04T18:41:07.816911
+ALTER TABLE "auth_user" ADD "proyecto" INTEGER REFERENCES "proyectos" ("id") ON DELETE CASCADE  ;
+success!
+timestamp: 2020-11-04T18:41:07.834706
+CREATE TABLE "auth_user_archive"(
+    "current_record" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" CHAR(128),
+    "last_name" CHAR(128),
+    "email" CHAR(512),
+    "password" CHAR(512),
+    "registration_key" CHAR(512),
+    "reset_password_key" CHAR(512),
+    "registration_id" CHAR(512),
+    "tipo" TEXT,
+    "cliente" INTEGER REFERENCES "clientes" ("id") ON DELETE CASCADE  ,
+    "proyecto" INTEGER REFERENCES "proyectos" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2020-11-04T18:41:07.844011
+CREATE TABLE "empleados"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "empleados_nombres" CHAR(512),
+    "empleados_identificacion" CHAR(512),
+    "empleados_celular" CHAR(512),
+    "empleados_cliente" INTEGER REFERENCES "clientes" ("id") ON DELETE CASCADE  ,
+    "empleados_fecha_ingreso" CHAR(512),
+    "empleados_fecha_nacimiento" CHAR(512),
+    "empleados_contacto_emergancia" CHAR(512),
+    "empleados_parentesco_emergancia" CHAR(512),
+    "empleados_telefono_emergancia" CHAR(512),
+    "empleados_direccion_recidencia" CHAR(512),
+    "empleados_email" CHAR(512),
+    "empleados_genero" TEXT,
+    "empleados_observaciones" TEXT,
+    "empleados_estado" CHAR(512),
+    "empleados_fecha_creacion" INTEGER,
+    "empleados_hora_creacion" INTEGER,
+    "empleados_foto" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T18:41:07.853905
+CREATE TABLE "empleados_archive"(
+    "current_record" INTEGER REFERENCES "empleados" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "empleados_nombres" CHAR(512),
+    "empleados_identificacion" CHAR(512),
+    "empleados_celular" CHAR(512),
+    "empleados_cliente" INTEGER REFERENCES "clientes" ("id") ON DELETE CASCADE  ,
+    "empleados_fecha_ingreso" CHAR(512),
+    "empleados_fecha_nacimiento" CHAR(512),
+    "empleados_contacto_emergancia" CHAR(512),
+    "empleados_parentesco_emergancia" CHAR(512),
+    "empleados_telefono_emergancia" CHAR(512),
+    "empleados_direccion_recidencia" CHAR(512),
+    "empleados_email" CHAR(512),
+    "empleados_genero" TEXT,
+    "empleados_observaciones" TEXT,
+    "empleados_estado" CHAR(512),
+    "empleados_fecha_creacion" INTEGER,
+    "empleados_hora_creacion" INTEGER,
+    "empleados_foto" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T18:41:07.863667
+CREATE TABLE "usuario_empleado"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "usuario_empleado_empleado" INTEGER REFERENCES "empleados" ("id") ON DELETE CASCADE  ,
+    "usuario_empleado_usuario" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2020-11-04T18:41:07.871146
+CREATE TABLE "usuario_empleado_archive"(
+    "current_record" INTEGER REFERENCES "usuario_empleado" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "usuario_empleado_empleado" INTEGER REFERENCES "empleados" ("id") ON DELETE CASCADE  ,
+    "usuario_empleado_usuario" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2020-11-04T18:41:07.879630
+CREATE TABLE "trasabilidad_notificaciones"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "email_notificado" CHAR(512),
+    "usuario_notificado" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "cotizacion" CHAR(512),
+    "cliente" CHAR(512),
+    "sms" CHAR(512),
+    "asunto" CHAR(512),
+    "estado" CHAR(512),
+    "fecha_notifcacion" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T18:41:07.888366
+CREATE TABLE "trasabilidad_notificaciones_archive"(
+    "current_record" INTEGER REFERENCES "trasabilidad_notificaciones" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "email_notificado" CHAR(512),
+    "usuario_notificado" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "cotizacion" CHAR(512),
+    "cliente" CHAR(512),
+    "sms" CHAR(512),
+    "asunto" CHAR(512),
+    "estado" CHAR(512),
+    "fecha_notifcacion" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T18:41:07.897466
+CREATE TABLE "notificaciones_cliente_proyectos"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "notificaciones_cliente_proyectos_cliente" INTEGER REFERENCES "clientes" ("id") ON DELETE CASCADE  ,
+    "notificaciones_cliente_proyectos_proyecto" INTEGER REFERENCES "proyectos" ("id") ON DELETE CASCADE  ,
+    "notificaciones_cliente_proyectos_sms" CHAR(512),
+    "notificaciones_cliente_proyectos_asunto" CHAR(512),
+    "notificaciones_cliente_proyectos_estado" CHAR(512),
+    "notificaciones_cliente_proyectos_fecha_creacion" INTEGER,
+    "notificaciones_cliente_proyectos_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.906440
+CREATE TABLE "notificaciones_cliente_proyectos_archive"(
+    "current_record" INTEGER REFERENCES "notificaciones_cliente_proyectos" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "notificaciones_cliente_proyectos_cliente" INTEGER REFERENCES "clientes" ("id") ON DELETE CASCADE  ,
+    "notificaciones_cliente_proyectos_proyecto" INTEGER REFERENCES "proyectos" ("id") ON DELETE CASCADE  ,
+    "notificaciones_cliente_proyectos_sms" CHAR(512),
+    "notificaciones_cliente_proyectos_asunto" CHAR(512),
+    "notificaciones_cliente_proyectos_estado" CHAR(512),
+    "notificaciones_cliente_proyectos_fecha_creacion" INTEGER,
+    "notificaciones_cliente_proyectos_hora_creacion" INTEGER
+);
+success!
+timestamp: 2020-11-04T18:41:07.914901
+CREATE TABLE "usuario_predio"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "usuario_predio_predio" INTEGER REFERENCES "interioresPredios" ("id") ON DELETE CASCADE  ,
+    "usuario_predio_usuario" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2020-11-04T18:41:07.922492
+CREATE TABLE "usuario_predio_archive"(
+    "current_record" INTEGER REFERENCES "usuario_predio" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "usuario_predio_predio" INTEGER REFERENCES "interioresPredios" ("id") ON DELETE CASCADE  ,
+    "usuario_predio_usuario" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2020-11-04T18:51:08.912961
+CREATE TABLE "proveedores"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "proveedores_nombre" CHAR(512),
+    "proveedores_codigo" CHAR(512),
+    "proveedores_estado" CHAR(512),
+    "proveedores_fecha_creacion" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T18:51:08.927801
+CREATE TABLE "proveedores_archive"(
+    "current_record" INTEGER REFERENCES "proveedores" ("id") ON DELETE CASCADE  ,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "proveedores_nombre" CHAR(512),
+    "proveedores_codigo" CHAR(512),
+    "proveedores_estado" CHAR(512),
+    "proveedores_fecha_creacion" CHAR(512)
+);
+success!
+timestamp: 2020-11-04T19:34:14.623526
+CREATE TABLE "empresasAvi"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "empresasAvi_nombre" CHAR(512),
+    "empresasAvi_codigo" CHAR(512),
+    "empresasAvi_estado" CHAR(512),
+    "empresasAvi_fecha_creacion" CHAR(512)
+);
+success!

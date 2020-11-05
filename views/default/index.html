@@ -1,0 +1,70 @@
+{{extend plantilla()}}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-custom gutter-b example example-compact">
+      <div class="card-header">
+        <h3 class="card-title">Procesamiento de archivos</h3>
+        <div class="card-toolbar">
+          <div class="example-tools justify-content-center">
+            <a href="#!" onclick="alert('Nos estamos preparando para explicarte como funcionamos');">
+              <i class="fas fa-question"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <form class="form">
+        <div class="card-body">
+          
+          <div class="form-group row">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <select class="form-control select2 is-valid" id="kt_select2_1_validate" name="param">
+              </select>
+              <div class="valid-feedback"></div>
+              <span class="form-text text-muted">Recuerda seleccionar un <b>Cliente</b>.</span>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <select class="form-control select2 is-valid" id="kt_select2_2_validate" name="param">
+              </select>
+              <div class="valid-feedback"></div>
+              <span class="form-text text-muted">Recuerda seleccionar un <b>Segmento</b>.</span>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <select class="form-control select2 is-valid" id="kt_select2_3_validate" name="param">
+              </select>
+              <div class="valid-feedback"></div>
+              <span class="form-text text-muted">Recuerda seleccionar una <b>Asignación</b>.</span>
+            </div>
+          </div>
+          <br><br><hr>
+          <div class="form-group row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="dropzone dropzone-default dropzone-primary" id="kt_dropzone_1">
+                <div class="dropzone-msg dz-message needsclick">
+                  <h3 class="dropzone-msg-title">Arrastra y suelta el archivo aquí o haz clic para subir el archivo de la <b>MACRO</b> .</h3>
+                  <span class="dropzone-msg-desc">This is just a demo dropzone. Selected files are
+                  <strong>not</strong>actually uploaded.</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="dropzone dropzone-default dropzone-success" id="kt_dropzone_2">
+                <div class="dropzone-msg dz-message needsclick">
+                  <h3 class="dropzone-msg-title">Arrastra y suelta los archivos aquí o haz clic para subirlos archivos de <b>BI</b>.</h3>
+                  <span class="dropzone-msg-desc">Maxímo 10 archivos</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-lg-3 ml-lg-auto">
+              <button onclick="limpiar();" class="btn btn-secondary">Limpiar</button>
+              <button onclick="alert('Deje de joder estamos en proceso............');" class="btn btn-primary mr-3">Vamos ejecutame...>>>>>></button>
+            </div>
+          </div>
+        </div>
+      </form>  
+    </div>  
+</div>

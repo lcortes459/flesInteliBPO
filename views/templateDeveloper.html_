@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{=str(request.application).capitalize()}} | {{=str(response.title).capitalize()}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/fontawesome-free/css/all.min.css')}}">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/jqvmap/jqvmap.min.css')}}">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
+  <link rel="stylesheet" href="{{=URL('static','template/dist/css/adminlte.min.css')}}">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/daterangepicker/daterangepicker.css')}}">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/summernote/summernote-bs4.css')}}">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="shortcut icon" href="{{=URL('static','images/logoGuardianweb.png')}}" type="image/x-icon">
+  <link rel="apple-touch-icon" href="{{=URL('static','images/logoGuardianweb.png')}}">
+  <link rel="stylesheet" href="{{=URL('static','css/styles.css')}}">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+  <link rel="stylesheet" href="{{=URL('static','template/plugins/toastr/toastr.min.css')}}">
+  <style>
+    body{
+      font-style: italic;
+    }
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        /* background: url('https://loading.io/asset/359637') 50% 50% no-repeat rgb(249,249,249); */
+        opacity: .6;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(window).load(function() {
+        $(".loader").fadeOut("slow");
+    });
+  </script>
+  {{include 'web2py_ajax.html'}} <!-- this includes jquery.js, calendar.js/.css and web2py.js sidebar-collapse-->
+  {{block header}}
+  {{end}}
+</head>
+<body class="sidebar-mini layout-footer-fixed layout-navbar-fixed layout-fixed">
+  
+  <div class="wrapper">
+    <div class="loader">
+      <!-- <div class="overlay dark"> <i class="fas fa-2x fa-sync-alt fa-spin"></i> </div> -->
+      <svg xml:space="preserve" viewBox="0 0 100 100" y="0" x="0" xmlns="http://www.w3.org/2000/svg" id="Layer_1" version="1.1" style="height: 100%; width: 100%; background: rgb(241, 242, 243);" width="100px" height="100px"><g class="ldl-scale" style="transform-origin: 50% 50%; transform: rotate(0deg) scale(0.8, 0.8);"><g class="ldl-ani"><g class="ldl-layer"><g class="ldl-ani" style="transform: scale(0.91); transform-origin: 50px 50px; animation: 1.11111s linear -0.666667s infinite normal forwards running breath-67ec918b-1547-4bdc-9feb-293b70bf8d52;"><path fill="#e15c64" d="M50 10v80c9-2.3 21.6-10.7 28.3-22.4C85 56 85.6 41.1 85.6 25.7 67.8 25.7 50 10 50 10z" style="fill: rgb(238, 236, 234);"></path></g></g><g class="ldl-layer"><g class="ldl-ani" style="transform: scale(0.91); transform-origin: 50px 50px; animation: 1.11111s linear -0.777778s infinite normal forwards running breath-67ec918b-1547-4bdc-9feb-293b70bf8d52;"><path fill="#c33837" d="M14.4 25.7c0 15.4.1 30.4 6.7 42.1C27.8 79.6 40.9 88 50 90V10S32.2 25.7 14.4 25.7z" style="fill: rgb(181, 170, 159);"></path></g></g><g class="ldl-layer"><g class="ldl-ani" style="transform: scale(0.91); transform-origin: 50px 50px; animation: 1.11111s linear -0.888889s infinite normal forwards running breath-67ec918b-1547-4bdc-9feb-293b70bf8d52;"><path fill="#f4e6c8" d="M41.2 49.7c1.1 0 2-.9 2-2v-5.4c.1-3.9 3.1-7.1 6.8-7.1 3.7 0 6.7 3.2 6.8 7.1v5.4c0 1.1.9 2 2 2s2-.9 2-2v-5.9C60.5 35.8 55.7 31 50 31s-10.5 4.8-10.8 10.8v5.9c0 1.1.9 2 2 2z" style="fill: rgb(147, 215, 45);"></path></g></g><g class="ldl-layer"><g class="ldl-ani" style="transform: scale(0.91); transform-origin: 50px 50px; animation: 1.11111s linear -1s infinite normal forwards running breath-67ec918b-1547-4bdc-9feb-293b70bf8d52;"><path fill="#f4e6c8" d="M59.3 45.9H38.2v14.8c0 2.1 1.7 3.8 3.8 3.8h16.1c2.1 0 3.8-1.7 3.8-3.8V45.9h-2.6z" style="fill: rgb(147, 215, 45);"></path></g></g><g class="ldl-layer"><g class="ldl-ani" style="transform: scale(0.91); transform-origin: 50px 50px; animation: 1.11111s linear -1.11111s infinite normal forwards running breath-67ec918b-1547-4bdc-9feb-293b70bf8d52;"><path fill="#333" d="M50 50.4c-1.4 0-2.6 1.2-2.6 2.6 0 1 .6 1.9 1.5 2.4l-.1 3.6h2.4l-.1-3.6c.9-.4 1.5-1.3 1.5-2.4 0-1.5-1.2-2.6-2.6-2.6z" style="fill: rgb(243, 231, 201);"></path></g></g><metadata xmlns:d="https://loading.io/stock/"><d:name>shield</d:name><d:tags>guard,lock,security,protect,defense,anti virus,shield,web application</d:tags><d:license>pro</d:license><d:slug>yk5shn</d:slug></metadata></g></g></svg>
+    </div>
+    
+    
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"><b> {{=str(response.title).capitalize()}}</b></a>
+        </li>
+       <!--  <li class="nav-item d-none d-sm-inline-block">
+          <a href="index3.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" class="nav-link">Contact</a>
+        </li> -->
+      </ul>
+
+      <!-- SEARCH FORM -->
+      <!-- <form class="form-inline ml-3">
+        <div class="input-group input-group-sm">
+          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-navbar" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form> -->
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Configuraciones Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="fa fa-cogs"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <span class="dropdown-item dropdown-header">Configuraciones</span>
+            <div class="dropdown-divider"></div>
+            <a href="{{=URL('base','paises')}}" class="dropdown-item">
+              Paises
+              <span class="float-right text-muted text-sm">
+                <i class="fas fa-angle-right right"></i>
+              </span>
+            </a> 
+            <div class="dropdown-divider"></div>
+             <a href="{{=URL('base','ciudades')}}" class="dropdown-item">
+              Ciudades
+              <span class="float-right text-muted text-sm">
+                <i class="fas fa-angle-right right"></i>
+              </span>
+            </a> 
+            <div class="dropdown-divider"></div>
+            <a href="{{=URL('base','empleados')}}" class="dropdown-item">
+              Empleados
+              <span class="float-right text-muted text-sm">
+                <i class="fas fa-angle-right right"></i>
+              </span>
+            </a>  
+            <div class="dropdown-divider"></div>
+            <a href="{{=URL('users','index')}}" class="dropdown-item">
+              Usuarios
+              <span class="float-right text-muted text-sm">
+                <i class="fas fa-angle-right right"></i>
+              </span>
+            </a> 
+            <div class="dropdown-divider"></div>
+             <a href="{{=URL('base','planes')}}" class="dropdown-item">
+              Planes
+              <span class="float-right text-muted text-sm">
+                <i class="fas fa-angle-right right"></i>
+              </span>
+            </a> 
+            <div class="dropdown-divider"></div>
+            <!--a href="{{=URL('base','proveedores')}}" class="dropdown-item">
+              Proveedores
+              <span class="float-right text-muted text-sm">
+                <i class="fas fa-angle-right right"></i>
+              </span>
+            </a> 
+            <div class="dropdown-divider"></div-->
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-link">
+        <img src="{{=getFotoUsuario(idUser)}}" alt="Guardian_Logo" class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light">{{=str(request.application).capitalize()}}</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <a href="{{=URL('users','perfil')}}">
+              <img src="{{=getFotoUsuario(idUser)}}" class="img-circle elevation-2" alt="User Image">
+            </a>
+          </div>
+          <div class="info">
+            <a href="{{=URL('users','perfil')}}" class="d-block">{{=nameUser}}</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-header">Operaciones</li>
+            <li class="nav-item has-treeview menu-open">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-database"></i>
+                <p>
+                  Base
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{=URL('cotizaciones','listCotizaciones')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Cotizaciones</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{=URL('cotizaciones','ordenesServicio')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Ordenes servicio</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{=URL('cotizaciones','ordenesTrabajo')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Ordenes trabajo</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{=URL('clientes','listClientes')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Clientes</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  Facturacion
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{=URL('facturacion','general')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>General</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                  Reportes
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{=URL('reportes','general')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Generales</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{=URL('facturacion','avanzados')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Advanzados</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <!-- <div class="col-sm-6">
+              <h1 class="m-0 text-dark"></h1>
+            </div> -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <!-- <li class="breadcrumb-item"><a href="#!"></a></li> -->
+                <!-- <li class="breadcrumb-item active"><b>{{#=str(response.title).capitalize()}}</b></li> -->
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+
+      <section class="content">
+        <div cla_ss="container-fluid">
+          <div class="card card-default" id="cardPrincipal">
+            <div class="card-header" id="cardHeaderPrincipal">
+              <div style="float:left;">
+                
+                <h3 class="card-title"> 
+                  <i class="fas fa-{{=response.icono or 'list'}}"></i>
+                  {{=str(response.subTitle).capitalize() or '' }}
+                </h3>
+              </div>
+              <div style="float:right;">
+                  {{=XML(response.botton) or '' }}
+              </div>
+            </div>
+            <div class="card-body" id="cardBodyPrincipal">
+              <div class="col-12">
+                {{include}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <footer class="main-footer">
+      <strong>Creado por &copy; <a href="#!">BSI</a>.{{#=str(request.now)[:4]}} </strong>
+      <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 1.0.0
+      </div>
+    </footer> 
+  </div>
+<!-- jQuery -->
+<script src="{{=URL('static','template/plugins/jquery/jquery.min.js')}}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{=URL('static','template/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{{=URL('static','template/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- ChartJS -->
+<script src="{{=URL('static','template/plugins/chart.js/Chart.min.js')}}"></script>
+<!-- Sparkline -->
+<script src="{{=URL('static','template/plugins/sparklines/sparkline.js')}}"></script>
+<!-- JQVMap -->
+<script src="{{=URL('static','template/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
+<script src="{{=URL('static','template/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{{=URL('static','template/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
+<!-- daterangepicker -->
+<script src="{{=URL('static','template/plugins/moment/moment.min.js')}}"></script>
+<script src="{{=URL('static','template/plugins/daterangepicker/daterangepicker.js')}}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{{=URL('static','template/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+<!-- Summernote -->
+<script src="{{=URL('static','template/plugins/summernote/summernote-bs4.min.js')}}"></script>
+<!-- overlayScrollbars -->
+<script src="{{=URL('static','template/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+<script src="{{=URL('static','template/plugins/datatables/jquery.dataTables.js')}}"></script>
+<script src="{{=URL('static','template/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{=URL('static','template/dist/js/adminlte.js')}}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{{=URL('static','template/dist/js/pages/dashboard.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{=URL('static','template/dist/js/demo.js')}}"></script>
+<script src="{{=URL('static','template/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+    <script src="{{=URL('static','template/plugins/toastr/toastr.min.js')}}"></script>
+<script src="{{=URL('static','js/template/template.js')}}"></script>
+{{block page_js}}{{end page_js}}
+</body>
+</html>

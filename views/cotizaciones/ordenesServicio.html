@@ -1,0 +1,80 @@
+{{extend plantilla()}}
+<div class="web2py_grid">
+	{{if len(ordenesServicio)>0:}}
+		<div id="listadoOrdenes" class="table-responsive">
+			<table id="idListadoOrdenesTable" class="display" style="width:100%">
+		        <thead>
+		            <tr>
+		                <th>Cliente</th>
+		                <th>Fecha creación</th>
+		                <th>Código cotización</th>
+		                <th>Código orden</th>
+		                <th>Estado</th>
+		                <th>Responsable ejecución</th>
+		                <th>Detalle</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		        	{{ for ctz in ordenesServicio: }}
+		        		
+			        	<tr id="idTrOrden_{{=ctz.id}}">
+			        		<td>
+		        				{{
+			        				idOrden = db(db.ordenesTrabajo.ordenesTrabajo_ordenServicio == ctz.id).select(db.ordenesTrabajo.id).last()
+			        				cliente = db(db.clientes.clientes_ordenTrabajo == idOrden.id).select(db.clientes.clientes_nombre).last()
+			        				nombreCliente = cliente.clientes_nombre
+			        			}}
+			        			{{=nombreCliente}}
+			        		</td>
+			        		<td>{{=str(fechaFormato(str(ctz.ordenesServicios_fecha_creacion),'fecha'))}}</td>
+			        		<td>{{=db.cotizaciones[ctz.ordenesServicios_cotizacion].cotizaciones_codigo}}</td>
+			        		<td>{{=ctz.ordenesServicios_codigo}}</td>
+			        		<td>
+			        			<span class="badge badge-secondary" id="spanEstado_{{=ctz.id}}" style="cursor:pointer;" onclick="ord.cambioEstado('{{=ctz.id}}', '');">{{=ctz.ordenesServicios_estado}}</span>
+			        		</td>
+			        		<td>
+			        			{{ if ctz.ordenesServicios_responsable_ejecucion:}} 
+			        				{{=db.auth_user[ctz.ordenesServicios_responsable_ejecucion].first_name}} {{=db.auth_user[ctz.ordenesServicios_responsable_ejecucion].last_name}}
+			        			{{else:}}
+			        				<span class="badge badge-danger" id="spanEstado_{{=ctz.id}}" style="cursor:pointer;" onclick="ord.cambioEstado('{{=ctz.id}}', '');">Sin Asignar</span> 
+			        			{{pass}}
+			        		</td>
+			        		<td>
+			        			<a  
+						            class="btn btn-app" 
+						            style="margin: 0px 10px 0px 0px; min-width: 30px; height: 35px;"
+						            onclick="ord.verOrden('listadoOrdenes','verOrden','{{=ctz.id}}');"
+						        >
+					            	<i 
+					            		class="fa fa-eye" 
+					            		style="color: grey;margin-top:-7px;"
+					                	>
+					                </i>
+					            </a>
+			        		</td>
+			        	</tr>
+			        {{ pass }}
+		        </tbody>
+		    </table>
+		</div>
+		<div id="verOrden" style="display: none;"></div>
+	{{else:}}
+		<div class="container">
+			<div class="row">
+				<div class="col col-lg-12">
+					<blockquote>
+	                  <p>En estos momentos no tienes ordenes de servicio.</p>
+	                  <small>Para crear una orden de servicio <cite title="Source Title">Primero crea una cotización</cite></small>
+	                </blockquote>
+				</div>
+				
+			</div>
+		</div>
+	{{pass}}
+</div>
+
+{{block page_js}}
+	<script>
+	</script>	
+	<script src="{{=URL('static','js/cotizaciones/ordenesServicio.js')}}"></script>
+{{end page_js}}
